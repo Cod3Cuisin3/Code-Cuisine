@@ -17,10 +17,8 @@ const testRoute = async (url) => {
   testRoute(url3)
 
   const handleClick = (e) => {
-    const modal = document.querySelector('#modal');
-    if (modal.style.display === 'none') {
-      modal.style.display = 'block';
-    }
+    const food = document.querySelector('#food');
+    
   }
   
   document.querySelector('button').addEventListener('click', handleClick)
