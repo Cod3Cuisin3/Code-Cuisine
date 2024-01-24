@@ -52,7 +52,6 @@ const getFoodData = async () => {
                         const fullRecipe = await response.json();
                         console.log(`Full Recipe:`, fullRecipe);
 
-<<<<<<< HEAD
                         const h2 = document.createElement('h2');
                         h2.innerHTML = fullRecipe.meals[0].strMeal;
 
@@ -64,11 +63,9 @@ const getFoodData = async () => {
                         recipeModal.appendChild(h2)
                         recipeModal.appendChild(p)
                         recipeModal.style.display = 'block'
-=======
                         const { strInstructions} = fullRecipe.meals[0];
                         console.log(`strInstructions: ${strInstructions}`);
                         
->>>>>>> 7d4b093c335d59651c3909a660842bd672f47484
 
                     }
 
