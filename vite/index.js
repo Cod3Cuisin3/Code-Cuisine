@@ -1,10 +1,9 @@
 
-const foodUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Jamaican%20Beef%20Patties'
+//const foodUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Jamaican%20Beef%20Patties'
 
 
 const getFoodData = async () => {
     const jamaicaUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Jamaican';
-
     try {
         const response = await fetch(jamaicaUrl);
 
@@ -36,6 +35,7 @@ const getFoodData = async () => {
    
 };
 
+
 getFoodData();
 
-
+                                    
