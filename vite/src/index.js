@@ -31,6 +31,14 @@ const getFoodData = async () => {
 
             const li = document.createElement('li');
 
+            button.addEventListener('click', (e) => {
+                if(food.contains(e.target)){
+                const mealId = e.target.dataset.id
+                console.log(`Meal ID: ${mealId}`);
+                }
+                
+              });
+
             li.append(heading,img,button)
             food.appendChild(li);
         });
