@@ -2,6 +2,7 @@
 const foodUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Jamaican%20Beef%20Patties'
 
 
+
 const getFoodData = async () => {
     const jamaicaUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Jamaican';
 
@@ -31,10 +32,26 @@ const getFoodData = async () => {
 
             const li = document.createElement('li');
 
-            button.addEventListener('click', (e) => {
+            button.addEventListener('click', async (e) => {
                 if(food.contains(e.target)){
                 const mealId = e.target.dataset.id
                 console.log(`Meal ID: ${mealId}`);
+                
+                const foodId = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
+
+                    try{
+                        const response = await fetch (foodId)
+
+                        if(!response.ok){
+                            throw new Error(`Bad fetch ${response.status}`)
+                        }
+                        const fullRecipe = await response.json();
+                        console.log(`Full Recipe:`, fullRecipe);
+
+                    }
+                    catch(error){
+                        console.error(`${error.name},${error.message}`)
+                    }
                 }
                 
               });
