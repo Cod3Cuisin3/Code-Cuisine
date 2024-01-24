@@ -15,3 +15,12 @@ const testRoute = async (url) => {
   testRoute(url1);
   testRoute(url2);
   testRoute(url3)
+
+  const handleClick = (e) => {
+    const modal = document.querySelector('#modal');
+    if (modal.style.display === 'none') {
+      modal.style.display = 'block';
+    }
+  }
+  
+  document.querySelector('button').addEventListener('click', handleClick)
