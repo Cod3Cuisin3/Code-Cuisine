@@ -35,11 +35,12 @@ const getFoodData = async () => {
 
             const li = document.createElement('li');
 
+            //Implemented Event Listener for Button
             button.addEventListener('click', async (e) => {
                 if(food.contains(e.target)){
                 const mealId = e.target.dataset.id
                 console.log(`Meal ID: ${mealId}`);
-                
+                //Fetch meal id
                 const foodId = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
 
                     try{
@@ -51,6 +52,7 @@ const getFoodData = async () => {
                         const fullRecipe = await response.json();
                         console.log(`Full Recipe:`, fullRecipe);
 
+<<<<<<< HEAD
                         const h2 = document.createElement('h2');
                         h2.innerHTML = fullRecipe.meals[0].strMeal;
 
@@ -62,6 +64,11 @@ const getFoodData = async () => {
                         recipeModal.appendChild(h2)
                         recipeModal.appendChild(p)
                         recipeModal.style.display = 'block'
+=======
+                        const { strInstructions} = fullRecipe.meals[0];
+                        console.log(`strInstructions: ${strInstructions}`);
+                        
+>>>>>>> 7d4b093c335d59651c3909a660842bd672f47484
 
                     }
 
