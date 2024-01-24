@@ -15,19 +15,25 @@ const getFoodData = async () => {
         const jsonData = await response.json();
         console.log(jsonData);
 
- jsonData.meals.forEach(meal => {
-    const modal = document.getElementById('modal');
+        jsonData.meals.forEach(meal => {
+            const food = document.getElementById('food');
 
-    const heading = document.createElement('h3');
-    heading.innerHTML = meal.strMeal;
+            const heading = document.createElement('h3');
+            heading.innerHTML = meal.strMeal;
 
-    const img = document.createElement('img');
-    img.src = meal.strMealThumb;
-    img.alt = meal.strMeal;
+            const img = document.createElement('img');
+            img.src = meal.strMealThumb;
+            img.alt = meal.strMeal;
 
-    modal.appendChild(heading);
-    modal.appendChild(img);
-});
+            const button = document.createElement('button')
+            button.dataset.id = meal.idMeal;
+            button.textContent="recipe"
+
+            const li = document.createElement('li');
+
+            li.append(heading,img,button)
+            food.appendChild(li);
+        });
 
     } catch (error) {
         console.error(`${error.name}: ${error.message}`);
