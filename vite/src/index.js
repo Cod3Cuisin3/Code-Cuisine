@@ -1,5 +1,6 @@
+const main = () => {
 
-const foodUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Jamaican%20Beef%20Patties'
+}
 
 
 
@@ -22,6 +23,7 @@ const getFoodData = async () => {
             const heading = document.createElement('h3');
             heading.innerHTML = meal.strMeal;
 
+
             const img = document.createElement('img');
             img.src = meal.strMealThumb;
             img.alt = meal.strMeal;
@@ -29,6 +31,7 @@ const getFoodData = async () => {
             const button = document.createElement('button')
             button.dataset.id = meal.idMeal;
             button.textContent="recipe"
+
 
             const li = document.createElement('li');
 
@@ -48,14 +51,29 @@ const getFoodData = async () => {
                         const fullRecipe = await response.json();
                         console.log(`Full Recipe:`, fullRecipe);
 
+                        const h2 = document.createElement('h2');
+                        h2.innerHTML = fullRecipe.meals[0].strMeal;
+
+                        const p = document.createElement('p');
+                        p.innerHTML = fullRecipe.meals[0].strInstructions;
+
+                        const recipeModal = document.getElementById('recipeModal')
+                        recipeModal.innerHTML = ''
+                        recipeModal.appendChild(h2)
+                        recipeModal.appendChild(p)
+                        recipeModal.style.display = 'block'
+
                     }
+
                     catch(error){
                         console.error(`${error.name},${error.message}`)
                     }
+
                 }
                 
               });
 
+              
             li.append(heading,img,button)
             food.appendChild(li);
         });
