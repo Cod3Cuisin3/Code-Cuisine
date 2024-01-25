@@ -26,6 +26,7 @@ const getFoodData = async () => {
         console.log(jsonData);
 
         jsonData.meals.forEach(meal => {
+            // console.log('meal', meal)
             const food = document.getElementById('food');
 
             const heading = document.createElement('h3');
@@ -42,6 +43,8 @@ const getFoodData = async () => {
 
 
             const li = document.createElement('li');
+
+          
 
             //Implemented Event Listener for Button
             button.addEventListener('click', async (e) => {
@@ -72,17 +75,33 @@ const getFoodData = async () => {
                         recipeModal.innerHTML = ''
                         recipeModal.append(h2)
                         recipeModal.append(p)
+                        
+                        const a = document.createElement('a');
+                        a.href = fullRecipe.meals[0].strYoutube
+                        a.target = '_blank'
+                        const youtubeButton = document.createElement('button')
+                        console.log(fullRecipe.meals[0].strYoutube)
+                        youtubeButton.textContent = "YouTube"
+                        console.log(meal.strYoutube)
+                        
+                        a.append(youtubeButton)
+                        recipeModal.appendChild(a)
                         recipeModal.style.display = 'block'
                         const { strInstructions} = fullRecipe.meals[0];
                         console.log(`strInstructions: ${strInstructions}`);
 
+                        
                         const buttonRect = e.target.getBoundingClientRect();
                         // recipeModal.style.top = `${buttonRect.top + window.scrollY}px`;
                         // recipeModal.style.left = `${buttonRect.left + window.scrollX}px`;
             
                         // Display the modal
                         recipeModal.style.display = 'block';
-                        
+
+                       
+
+
+                  
 
                     }
 
@@ -94,6 +113,8 @@ const getFoodData = async () => {
                 
               });
 
+
+              
               
             li.append(heading,img,button)
             food.appendChild(li);
@@ -111,9 +132,10 @@ const getFoodData = async () => {
 document.addEventListener('DOMContentLoaded', function() {
     const music = new Audio('./src/backgroundMusic.mp3');
     music.play();
+    music.autoplay = true
     music.loop = true
   });
 
 getFoodData();
 main();
-music.play()
+
