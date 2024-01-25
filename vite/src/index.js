@@ -108,9 +108,12 @@ const getFoodData = async () => {
 
 
 
-const music = new Audio ('./src/backgroundMusic.mp3');
-music.play();
+document.addEventListener('DOMContentLoaded', function() {
+    const music = new Audio('./src/backgroundMusic.mp3');
+    music.play();
+    music.loop = true
+  });
 
 getFoodData();
 main();
-
+music.play()
