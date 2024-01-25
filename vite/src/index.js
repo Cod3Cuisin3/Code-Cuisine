@@ -1,4 +1,5 @@
 const main = () => {
+
     document.addEventListener('mousedown', (e) => {
         const recipeModal = document.getElementById('recipeModal');
         const button = document.querySelector('button[data-id]');
@@ -104,6 +105,11 @@ const getFoodData = async () => {
 
    
 };
+
+
+
+const music = new Audio ('./src/backgroundMusic.mp3');
+music.play();
 
 getFoodData();
 main();
