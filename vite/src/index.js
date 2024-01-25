@@ -30,7 +30,7 @@ const getFoodData = async () => {
 
             const button = document.createElement('button')
             button.dataset.id = meal.idMeal;
-            button.textContent="recipe"
+            button.textContent="Recipe"
 
 
             const li = document.createElement('li');
@@ -54,17 +54,26 @@ const getFoodData = async () => {
 
                         const h2 = document.createElement('h2');
                         h2.innerHTML = fullRecipe.meals[0].strMeal;
+                        h2.style.fontFamily = 'Cursive'
 
                         const p = document.createElement('p');
                         p.innerHTML = fullRecipe.meals[0].strInstructions;
+                        p.style.fontFamily = 'Cursive'
 
                         const recipeModal = document.getElementById('recipeModal')
                         recipeModal.innerHTML = ''
                         recipeModal.appendChild(h2)
                         recipeModal.appendChild(p)
-                        recipeModal.style.display = 'block'
+                        recipeModal.style.display = 'grid'
                         const { strInstructions} = fullRecipe.meals[0];
                         console.log(`strInstructions: ${strInstructions}`);
+
+                        const buttonRect = e.target.getBoundingClientRect();
+                        recipeModal.style.top = `${buttonRect.top + window.scrollY}px`;
+                        recipeModal.style.left = `${buttonRect.left + window.scrollX}px`;
+            
+                        // Display the modal
+                        recipeModal.style.display = 'grid';
                         
 
                     }
