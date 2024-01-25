@@ -37,14 +37,18 @@ button:hover{
     transform: scale(1.1);
 }
 
-ul{
-    color: green;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+ul {
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    grid-auto-rows: minmax(100px, auto);
     list-style: none;
-    
+}
+
+li {
+    position: relative;
+    flex: 1 0 calc(33.33% - 10px); /* Three items in a row with 10px gap */
+    max-width: calc(33.33% - 10px);
+    min-width: calc(33.33% - 10px);
 }
 
 img {
@@ -56,9 +60,6 @@ img:hover {
     transform: scale(1.1); 
 }
 
-li {
-    position: relative;
-  }
   
   h3 {
     position: absolute;

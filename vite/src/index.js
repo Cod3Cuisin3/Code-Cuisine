@@ -1,6 +1,14 @@
 const main = () => {
+    document.addEventListener('mousedown', (e) => {
+        const recipeModal = document.getElementById('recipeModal');
+        const button = document.querySelector('button[data-id]');
 
-}
+        if (!recipeModal.contains(e.target) && e.target !== button) {
+            recipeModal.style.display = 'none';
+        }
+    });
+};
+
 
 
 
@@ -9,7 +17,6 @@ const getFoodData = async () => {
 
     try {
         const response = await fetch(jamaicaUrl);
-
         if (!response.ok) {
             throw new Error(`Bad Fetch responded with ${response.status}`);
         }
@@ -99,5 +106,5 @@ const getFoodData = async () => {
 };
 
 getFoodData();
-
+main();
 
