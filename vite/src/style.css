@@ -28,6 +28,13 @@ button{
     cursor: pointer;
     transition: border-color 0.25s;
     box-shadow: 5px 5px 10px 10px black;
+    transition: transform 0.5s ease-in-out;
+    
+}
+
+button:hover{
+    background-color: green;
+    transform: scale(1.1);
 }
 
 ul{
@@ -43,6 +50,10 @@ ul{
 img {
     width: 100%; 
     height: auto; 
+    transition: transform 0.5s ease-in-out;
+}
+img:hover {
+    transform: scale(1.1); 
 }
 
 li {
@@ -71,6 +82,7 @@ li {
   body{
     background-color: yellow;
     background-image:url(JA\ Flag\ copy.jpg) ;
+
   }
 
   footer {
