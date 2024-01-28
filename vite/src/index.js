@@ -109,9 +109,17 @@ const createYoutubeButton = (strYoutube) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const music = new Audio('./src/backgroundMusic.mp3');
-    music.play();
-    music.autoplay = true;
-    music.loop = true;
+
+    
+    const startAudio = () => {
+        music.play();
+        music.loop = true;
+        // Remove the click event listener after the first interaction
+        document.removeEventListener('click', startAudio);
+    };
+
+    // Add click event listener to start audio playback
+    document.addEventListener('click', startAudio);
 });
 
 getFoodData();
