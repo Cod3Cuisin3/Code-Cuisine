@@ -24,12 +24,18 @@ const getFoodData = async () => {
         console.log(jsonData);
 
         const foodList = document.getElementById('food');
-        jsonData.meals.forEach(meal => createMealElement(meal, foodList));
+        jsonData.meals.forEach(meal => {
+            if (meal.strMeal === "Oxtail with broad beans") {
+                meal.strMealThumb = "src/Oxtail.jpeg"; // Relative path to the image
+            }
+            createMealElement(meal, foodList);
+        });
 
     } catch (error) {
         console.error(`${error.name}: ${error.message}`);
     }
 };
+
 
 const createMealElement = (meal, parentElement) => {
     const { strMeal, strMealThumb, idMeal } = meal;
