@@ -1,23 +1,21 @@
 const main = () => {
-
-    document.addEventListener('mousedown', (e) => {
-        const recipeModal = document.getElementById('recipeModal');
-        const button = document.querySelector('button[data-id]');
-
-        if (!recipeModal.contains(e.target) && e.target !== button) {
-            recipeModal.style.display = 'none';
-        }
-    });
+    document.addEventListener('mousedown', handleModalClose);
 };
 
+const handleModalClose = (e) => {
+    const recipeModal = document.getElementById('recipeModal');
+    const button = document.querySelector('button[data-id]');
 
-
+    if (!recipeModal.contains(e.target) && e.target !== button) {
+        recipeModal.style.display = 'none';
+    }
+};
 
 const getFoodData = async () => {
-    const jamaicaUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Jamaican';
-
     try {
+        const jamaicaUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Jamaican';
         const response = await fetch(jamaicaUrl);
+
         if (!response.ok) {
             throw new Error(`Bad Fetch responded with ${response.status}`);
         }
@@ -25,117 +23,93 @@ const getFoodData = async () => {
         const jsonData = await response.json();
         console.log(jsonData);
 
-        jsonData.meals.forEach(meal => {
-            // console.log('meal', meal)
-            const food = document.getElementById('food');
-
-            const heading = document.createElement('h3');
-            heading.innerHTML = meal.strMeal;
-
-
-            const img = document.createElement('img');
-            img.src = meal.strMealThumb;
-            img.alt = meal.strMeal;
-
-            const button = document.createElement('button')
-            button.dataset.id = meal.idMeal;
-            button.textContent="Recipe"
-
-
-            const li = document.createElement('li');
-
-          
-
-            //Implemented Event Listener for Button
-            button.addEventListener('click', async (e) => {
-                if(food.contains(e.target)){
-                const mealId = e.target.dataset.id
-                console.log(`Meal ID: ${mealId}`);
-                //Fetch meal id
-                const foodId = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
-
-                    try{
-                        const response = await fetch (foodId)
-
-                        if(!response.ok){
-                            throw new Error(`Bad fetch ${response.status}`)
-                        }
-                        const fullRecipe = await response.json();
-                        console.log(`Full Recipe:`, fullRecipe);
-
-                        const h2 = document.createElement('h2');
-                        h2.innerHTML = fullRecipe.meals[0].strMeal;
-                        h2.style.fontFamily = 'Cursive'
-
-                        const p = document.createElement('p');
-                        p.innerHTML = fullRecipe.meals[0].strInstructions;
-                        p.style.fontFamily = 'Cursive'
-
-                        const recipeModal = document.getElementById('recipeModal')
-                        recipeModal.innerHTML = ''
-                        recipeModal.append(h2)
-                        recipeModal.append(p)
-                        
-                        const a = document.createElement('a');
-                        a.href = fullRecipe.meals[0].strYoutube
-                        a.target = '_blank'
-                        const youtubeButton = document.createElement('button')
-                        console.log(fullRecipe.meals[0].strYoutube)
-                        youtubeButton.textContent = "YouTube"
-                        console.log(meal.strYoutube)
-                        
-                        a.append(youtubeButton)
-                        recipeModal.appendChild(a)
-                        recipeModal.style.display = 'block'
-                        const { strInstructions} = fullRecipe.meals[0];
-                        console.log(`strInstructions: ${strInstructions}`);
-
-                        
-                        const buttonRect = e.target.getBoundingClientRect();
-                        // recipeModal.style.top = `${buttonRect.top + window.scrollY}px`;
-                        // recipeModal.style.left = `${buttonRect.left + window.scrollX}px`;
-            
-                        // Display the modal
-                        recipeModal.style.display = 'block';
-
-                       
-
-
-                  
-
-                    }
-
-                    catch(error){
-                        console.error(`${error.name},${error.message}`)
-                    }
-
-                }
-                
-              });
-
-
-              
-              
-            li.append(heading,img,button)
-            food.appendChild(li);
-        });
+        const foodList = document.getElementById('food');
+        jsonData.meals.forEach(meal => createMealElement(meal, foodList));
 
     } catch (error) {
         console.error(`${error.name}: ${error.message}`);
     }
-
-   
 };
 
+const createMealElement = (meal, parentElement) => {
+    const { strMeal, strMealThumb, idMeal } = meal;
 
+    const heading = document.createElement('h3');
+    heading.innerHTML = strMeal;
 
-document.addEventListener('DOMContentLoaded', function() {
+    const img = document.createElement('img');
+    img.src = strMealThumb;
+    img.alt = strMeal;
+
+    const button = document.createElement('button');
+    button.dataset.id = idMeal;
+    button.textContent = "Recipe";
+    button.addEventListener('click', handleRecipeButtonClick);
+
+    const li = document.createElement('li');
+    li.append(heading, img, button);
+
+    parentElement.appendChild(li);
+};
+
+const handleRecipeButtonClick = async (e) => {
+    const mealId = e.target.dataset.id;
+    console.log(`Meal ID: ${mealId}`);
+
+    try {
+        const foodId = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
+        const response = await fetch(foodId);
+
+        if (!response.ok) {
+            throw new Error(`Bad fetch ${response.status}`);
+        }
+
+        const fullRecipe = await response.json();
+        console.log(`Full Recipe:`, fullRecipe);
+
+        const { strMeal, strInstructions, strYoutube } = fullRecipe.meals[0];
+        const recipeModal = document.getElementById('recipeModal');
+        recipeModal.innerHTML = '';
+
+        const h2 = document.createElement('h2');
+        h2.innerHTML = strMeal;
+        h2.style.fontFamily = 'Cursive';
+
+        const p = document.createElement('p');
+        p.innerHTML = strInstructions;
+        p.style.fontFamily = 'Cursive';
+
+        const youtubeButton = createYoutubeButton(strYoutube);
+        youtubeButton.classList.add('youtube-button');
+
+        recipeModal.append(h2, p, youtubeButton);
+        recipeModal.style.display = 'block';
+
+    } catch (error) {
+        console.error(`${error.name},${error.message}`);
+    }
+};
+
+const createYoutubeButton = (strYoutube) => {
+    const a = document.createElement('a');
+    a.href = strYoutube;
+    a.target = '_blank';
+
+    const youtubeButton = document.createElement('button');
+    youtubeButton.textContent = "YouTube";
+    youtubeButton.classList.add('youtube-button');
+
+    a.appendChild(youtubeButton);
+    return a;
+    
+};
+
+document.addEventListener('DOMContentLoaded', () => {
     const music = new Audio('./src/backgroundMusic.mp3');
     music.play();
-    music.autoplay = true
-    music.loop = true
-  });
+    music.autoplay = true;
+    music.loop = true;
+});
 
 getFoodData();
 main();
-
