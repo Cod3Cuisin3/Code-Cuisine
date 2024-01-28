@@ -26,7 +26,7 @@ const getFoodData = async () => {
         const foodList = document.getElementById('food');
         jsonData.meals.forEach(meal => {
             if (meal.strMeal === "Oxtail with broad beans") {
-                meal.strMealThumb = "src/Oxtail.jpeg"; // Relative path to the image
+                meal.strMealThumb = "src/oxtail.jpg"; 
             }
             createMealElement(meal, foodList);
         });
