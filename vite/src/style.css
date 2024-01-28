@@ -108,8 +108,7 @@ img:hover {
 
   body{
     background-color: yellow;
-    background-image:url(JA\ Flag\ copy.jpg) ;
-
+    background-image: url("JA Flag copy.jpg");
   }
 
   footer {
