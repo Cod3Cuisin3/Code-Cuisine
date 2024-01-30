@@ -108,9 +108,8 @@ const createYoutubeButton = (strYoutube) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const music = new Audio('./src/backgroundMusic.mp3');
+    const music = new Audio('/Code-Cuisine/src/backgroundMusic.mp3');
 
-    
     const startAudio = () => {
         music.play();
         music.loop = true;
@@ -121,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add click event listener to start audio playback
     document.addEventListener('click', startAudio);
 });
+
 
 getFoodData();
 main();
